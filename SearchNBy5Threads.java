@@ -23,19 +23,19 @@ class SearchThread extends Thread {
 public class SearchNBy5Threads {
     public static void main(String[] args) {
 
-        int[] arr = {10, 25, 30, 45, 50, 60, 70, 80, 90, 100};
-        int key = 70;
+        int[] arr = {10, 25, 30, 45, 50, 60, 70, 80, 90, 100, 50, 25, 50};
+        int key = 50;
 
         int n = arr.length;
-        int numThreads = n / 5;   // n/5 threads
         int chunkSize = 5;
+        int numThreads = (n + chunkSize - 1) / chunkSize; // ensures last chunk is included
 
         System.out.println("Number of threads: " + numThreads);
 
         int start = 0;
 
         for (int i = 0; i < numThreads; i++) {
-            int end = start + chunkSize;
+            int end = Math.min(start + chunkSize, n); // avoid exceeding array length
 
             SearchThread t = new SearchThread(arr, start, end, key);
             t.setName("Thread-" + (i + 1));
