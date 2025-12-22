@@ -15,6 +15,12 @@ public class MiniFootballGame extends JPanel implements ActionListener, KeyListe
     private Random rand = new Random();
     private boolean gameRunning = true;
 
+    private int playerScore = 0;
+    private int computerScore = 0;
+
+    private int playerHits = 0;      // Times ball hits player
+    private int computerHits = 0;    // Times ball hits computer
+
     // Flags for smooth movement
     private boolean movingUp = false;
     private boolean movingDown = false;
@@ -39,6 +45,14 @@ public class MiniFootballGame extends JPanel implements ActionListener, KeyListe
         // Background
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, getWidth(), getHeight());
+
+        // Scores and Hits
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Arial", Font.BOLD, 18));
+        g.drawString("Player Score: " + playerScore, 20, 25);
+        g.drawString("Computer Score: " + computerScore, getWidth() - 180, 25);
+        g.drawString("Player Hits: " + playerHits, 20, 50);
+        g.drawString("Computer Hits: " + computerHits, getWidth() - 200, 50);
 
         if (!gameRunning) {
             g.setColor(Color.RED);
@@ -65,11 +79,9 @@ public class MiniFootballGame extends JPanel implements ActionListener, KeyListe
         if (!gameRunning) return;
 
         // Smooth player movement
-        int playerSpeed = 8; // pixels per timer tick
+        int playerSpeed = 8;
         if (movingUp) playerY -= playerSpeed;
         if (movingDown) playerY += playerSpeed;
-
-        // Keep player within bounds
         playerY = Math.max(0, Math.min(playerY, getHeight() - 60));
 
         // Move ball
@@ -84,32 +96,39 @@ public class MiniFootballGame extends JPanel implements ActionListener, KeyListe
         // Simple computer AI
         if (ballY + 10 > computerY + 30) computerY += 4;
         else if (ballY + 10 < computerY + 30) computerY -= 4;
-
-        // Keep computer paddle in bounds
         computerY = Math.max(0, Math.min(computerY, getHeight() - 60));
 
         // Collision with Player 1
         if (ballX <= 70 && ballX >= 50 && ballY + 10 >= playerY && ballY <= playerY + 60) {
             ballX = 70;
-            ballSpeedX = -ballSpeedX; // Bounce back
+            ballSpeedX = -ballSpeedX;
+            playerHits++; // Increment player hits
         }
 
         // Collision with Computer
         if (ballX + 20 >= 530 && ballX + 20 <= 550 && ballY + 10 >= computerY && ballY <= computerY + 60) {
             ballX = 530 - 20;
-            ballSpeedX = -ballSpeedX; // Bounce back
+            ballSpeedX = -ballSpeedX;
+            computerHits++; // Increment computer hits
         }
 
         // Check if someone misses
         if (ballX <= 0) {
-            gameRunning = false;
-            JOptionPane.showMessageDialog(this, "Computer Wins!");
+            computerScore++;
+            resetBall();
         } else if (ballX >= getWidth() - 20) {
-            gameRunning = false;
-            JOptionPane.showMessageDialog(this, "Player Wins!");
+            playerScore++;
+            resetBall();
         }
 
         repaint();
+    }
+
+    private void resetBall() {
+        ballX = getWidth() / 2 - 10;
+        ballY = getHeight() / 2 - 10;
+        ballSpeedX = (rand.nextBoolean() ? 8 : -6);
+        ballSpeedY = (rand.nextBoolean() ? 6 : -4);
     }
 
     // KeyListener
