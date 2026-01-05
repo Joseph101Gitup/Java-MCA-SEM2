@@ -127,8 +127,8 @@ public class MiniFootballGame extends JPanel implements ActionListener, KeyListe
     private void resetBall() {
         ballX = getWidth() / 2 - 10;
         ballY = getHeight() / 2 - 10;
-        ballSpeedX = (rand.nextBoolean() ? 8 : -6);
-        ballSpeedY = (rand.nextBoolean() ? 6 : -4);
+        ballSpeedX = (rand.nextBoolean() ? 6 : -6);
+        ballSpeedY = (rand.nextBoolean() ? 4 : -4);
     }
 
     // KeyListener
