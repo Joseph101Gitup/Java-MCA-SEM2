@@ -1,3 +1,5 @@
+import Thread.ATMUser;
+import Thread.BankAccount;
 
 class BankAccount {
     private int balance = 1000; // Initial balance
