@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Lab Record Guide</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --code-bg: #f1f5f9;
+            --success: #10b981;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 1rem;
+            letter-spacing: -0.025em;
+        }
+
+        p.subtitle {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+        }
+
+        .alert {
+            background: #dbeafe;
+            border-left: 4px solid var(--primary);
+            padding: 1rem;
+            margin-bottom: 2rem;
+            border-radius: 0.5rem;
+            color: #1e40af;
+            font-weight: 500;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.75rem;
+        }
+
+        .number {
+            background: var(--primary);
+            color: white;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+
+        .title {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .file-info {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .command-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .command-wrapper {
+            position: relative;
+        }
+
+        .command-box {
+            background: var(--code-bg);
+            padding: 0.75rem;
+            padding-right: 3.5rem;
+            border-radius: 0.5rem;
+            font-family: 'ui-monospace', monospace;
+            font-size: 0.9rem;
+            border: 1px solid var(--border);
+            min-height: 2.75rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .copy-btn {
+            position: absolute;
+            right: 0.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 0.375rem;
+            padding: 0.4rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+        }
+
+        .copy-btn:hover {
+            background: var(--bg);
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .copy-btn.success {
+            color: var(--success);
+            border-color: var(--success);
+        }
+
+        .label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+            display: block;
+        }
+
+        footer {
+            margin-top: 4rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        @media (min-width: 640px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Tooltip style */
+        .tooltip {
+            position: absolute;
+            bottom: 110%;
+            right: 0;
+            background: #1e293b;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .copy-btn.success+.tooltip {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Java Lab Dashboard</h1>
+            <p class="subtitle">Quick access to all 26 Java lab programs</p>
+        </header>
+
+
+        <div class="grid">
+            <!-- Program 1 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="number">1</div>
+                    <div class="title">Generic Method Demo</div>
+                </div>
+                <div class="file-info">Source: GenericMethodDemo.java</div>
+                <div class="command-group">
+                    <div class="command-wrapper">
+                        <span class="label">Compile</span>
+                        <div class="command-box">javac GenericMethodDemo.java</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                    <div class="command-wrapper">
+                        <span class="label">Run</span>
+                        <div class="command-box">java GenericMethodDemo</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Program 2 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="number">2</div>
+                    <div class="title">Generic Class Demo</div>
+                </div>
+                <div class="file-info">Source: GenericClassDemo.java</div>
+                <div class="command-group">
+                    <div class="command-wrapper">
+                        <span class="label">Compile</span>
+                        <div class="command-box">javac GenericClassDemo.java</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                    <div class="command-wrapper">
+                        <span class="label">Run</span>
+                        <div class="command-box">java GenericClassDemo</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Program 3 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="number">3</div>
+                    <div class="title">String Operations</div>
+                </div>
+                <div class="file-info">Source: StringOperations.java</div>
+                <div class="command-group">
+                    <div class="command-wrapper">
+                        <span class="label">Compile</span>
+                        <div class="command-box">javac StringOperations.java</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                    <div class="command-wrapper">
+                        <span class="label">Run</span>
+                        <div class="command-box">java StringOperations</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Program 4 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="number">4</div>
+                    <div class="title">String Buffer Demo</div>
+                </div>
+                <div class="file-info">Source: StringBufferDemo.java</div>
+                <div class="command-group">
+                    <div class="command-wrapper">
+                        <span class="label">Compile</span>
+                        <div class="command-box">javac StringBufferDemo.java</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                    <div class="command-wrapper">
+                        <span class="label">Run</span>
+                        <div class="command-box">java StringBufferDemo</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Program 5 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="number">5</div>
+                    <div class="title">Basic Server & Client</div>
+                </div>
+                <div class="file-info">Sources: BasicServer.java, BasicClient.java</div>
+                <div class="command-group">
+                    <div class="command-wrapper">
+                        <span class="label">Terminal 1 (Server)</span>
+                        <div class="command-box">javac BasicServer.java && java BasicServer</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                    <div class="command-wrapper">
+                        <span class="label">Terminal 2 (Client)</span>
+                        <div class="command-box">javac BasicClient.java && java BasicClient</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Program 6 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="number">6</div>
+                    <div class="title">Chat Server & Client</div>
+                </div>
+                <div class="file-info">Sources: ChatServer.java, ChatClient.java</div>
+                <div class="command-group">
+                    <div class="command-wrapper">
+                        <span class="label">Terminal 1 (Server)</span>
+                        <div class="command-box">javac ChatServer.java && java ChatServer</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                    <div class="command-wrapper">
+                        <span class="label">Terminal 2 (Client)</span>
+                        <div class="command-box">javac ChatClient.java && java ChatClient</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Program 7 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="number">7</div>
+                    <div class="title">Download Server & Client</div>
+                </div>
+                <div class="file-info">Sources: DownloadServer.java, DownloadClient.java</div>
+                <div class="command-group">
+                    <div class="command-wrapper">
+                        <span class="label">Terminal 1 (Server)</span>
+                        <div class="command-box">javac DownloadServer.java && java DownloadServer</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                    <div class="command-wrapper">
+                        <span class="label">Terminal 2 (Client)</span>
+                        <div class="command-box">javac DownloadClient.java && java DownloadClient</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Program 8 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="number">8</div>
+                    <div class="title">Upload Server & Client</div>
+                </div>
+                <div class="file-info">Sources: UploadServer.java, UploadClient.java</div>
+                <div class="command-group">
+                    <div class="command-wrapper">
+                        <span class="label">Terminal 1 (Server)</span>
+                        <div class="command-box">javac UploadServer.java && java UploadServer</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                    <div class="command-wrapper">
+                        <span class="label">Terminal 2 (Client)</span>
+                        <div class="command-box">javac UploadClient.java && java UploadClient</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Program 9 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="number">9</div>
+                    <div class="title">Public Chat Server & Client</div>
+                </div>
+                <div class="file-info">Sources: PublicChatServer.java, PublicChatClient.java</div>
+                <div class="command-group">
+                    <div class="command-wrapper">
+                        <span class="label">Terminal 1 (Server)</span>
+                        <div class="command-box">javac PublicChatServer.java && java PublicChatServer</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                    <div class="command-wrapper">
+                        <span class="label">Terminal 2 (Client)</span>
+                        <div class="command-box">javac PublicChatClient.java && java PublicChatClient</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Program 10 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="number">10</div>
+                    <div class="title">UDP Server & Client</div>
+                </div>
+                <div class="file-info">Sources: UDPServer.java, UDPClient.java</div>
+                <div class="command-group">
+                    <div class="command-wrapper">
+                        <span class="label">Terminal 1 (Server)</span>
+                        <div class="command-box">javac UDPServer.java && java UDPServer</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                    <div class="command-wrapper">
+                        <span class="label">Terminal 2 (Client)</span>
+                        <div class="command-box">javac UDPClient.java && java UDPClient</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Program 11 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="number">11</div>
+                    <div class="title">URL Info</div>
+                </div>
+                <div class="file-info">Source: URLInfo.java</div>
+                <div class="command-group">
+                    <div class="command-wrapper">
+                        <span class="label">Compile</span>
+                        <div class="command-box">javac URLInfo.java</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                    <div class="command-wrapper">
+                        <span class="label">Run</span>
+                        <div class="command-box">java URLInfo</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Program 12 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="number">12</div>
+                    <div class="title">URL File Download</div>
+                </div>
+                <div class="file-info">Source: URLFileDownload.java</div>
+                <div class="command-group">
+                    <div class="command-wrapper">
+                        <span class="label">Compile</span>
+                        <div class="command-box">javac URLFileDownload.java</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                    <div class="command-wrapper">
+                        <span class="label">Run</span>
+                        <div class="command-box">java URLFileDownload</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Program 13 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="number">13</div>
+                    <div class="title">Web Page Content</div>
+                </div>
+                <div class="file-info">Source: WebPageContent.java</div>
+                <div class="command-group">
+                    <div class="command-wrapper">
+                        <span class="label">Compile</span>
+                        <div class="command-box">javac WebPageContent.java</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                    <div class="command-wrapper">
+                        <span class="label">Run</span>
+                        <div class="command-box">java WebPageContent</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Program 14 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="number">14</div>
+                    <div class="title">JDBC Insert</div>
+                </div>
+                <div class="file-info">Source: JDBCInsert.java</div>
+                <div class="command-group">
+                    <div class="command-wrapper">
+                        <span class="label">Compile</span>
+                        <div class="command-box">javac JDBCInsert.java</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                    <div class="command-wrapper">
+                        <span class="label">Run</span>
+                        <div class="command-box">java JDBCInsert</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Program 15 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="number">15</div>
+                    <div class="title">JDBC Login</div>
+                </div>
+                <div class="file-info">Source: JDBCLogin.java</div>
+                <div class="command-group">
+                    <div class="command-wrapper">
+                        <span class="label">Compile</span>
+                        <div class="command-box">javac JDBCLogin.java</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                    <div class="command-wrapper">
+                        <span class="label">Run</span>
+                        <div class="command-box">java JDBCLogin</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Program 16 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="number">16</div>
+                    <div class="title">JDBC Join Display</div>
+                </div>
+                <div class="file-info">Source: JDBCJoinDisplay.java</div>
+                <div class="command-group">
+                    <div class="command-wrapper">
+                        <span class="label">Compile</span>
+                        <div class="command-box">javac JDBCJoinDisplay.java</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                    <div class="command-wrapper">
+                        <span class="label">Run</span>
+                        <div class="command-box">java JDBCJoinDisplay</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Program 17 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="number">17</div>
+                    <div class="title">JDBC Statements</div>
+                </div>
+                <div class="file-info">Source: JDBCStatements.java</div>
+                <div class="command-group">
+                    <div class="command-wrapper">
+                        <span class="label">Compile</span>
+                        <div class="command-box">javac JDBCStatements.java</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                    <div class="command-wrapper">
+                        <span class="label">Run</span>
+                        <div class="command-box">java JDBCStatements</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Program 18 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="number">18</div>
+                    <div class="title">JDBC Transaction Batch</div>
+                </div>
+                <div class="file-info">Source: JDBCTransactionBatch.java</div>
+                <div class="command-group">
+                    <div class="command-wrapper">
+                        <span class="label">Compile</span>
+                        <div class="command-box">javac JDBCTransactionBatch.java</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                    <div class="command-wrapper">
+                        <span class="label">Run</span>
+                        <div class="command-box">java JDBCTransactionBatch</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Program 19 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="number">19</div>
+                    <div class="title">Serialization Demo</div>
+                </div>
+                <div class="file-info">Source: SerializationDemo.java</div>
+                <div class="command-group">
+                    <div class="command-wrapper">
+                        <span class="label">Compile</span>
+                        <div class="command-box">javac SerializationDemo.java</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                    <div class="command-wrapper">
+                        <span class="label">Run</span>
+                        <div class="command-box">java SerializationDemo</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Program 20 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="number">20</div>
+                    <div class="title">ISA Serialization</div>
+                </div>
+                <div class="file-info">Source: ISASerialization.java</div>
+                <div class="command-group">
+                    <div class="command-wrapper">
+                        <span class="label">Compile</span>
+                        <div class="command-box">javac ISASerialization.java</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                    <div class="command-wrapper">
+                        <span class="label">Run</span>
+                        <div class="command-box">java ISASerialization</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Program 21 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="number">21</div>
+                    <div class="title">HASA Serialization</div>
+                </div>
+                <div class="file-info">Source: HASASerialization.java</div>
+                <div class="command-group">
+                    <div class="command-wrapper">
+                        <span class="label">Compile</span>
+                        <div class="command-box">javac HASASerialization.java</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                    <div class="command-wrapper">
+                        <span class="label">Run</span>
+                        <div class="command-box">java HASASerialization</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Program 22 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="number">22</div>
+                    <div class="title">Transient Serialization</div>
+                </div>
+                <div class="file-info">Source: TransientSerialization.java</div>
+                <div class="command-group">
+                    <div class="command-wrapper">
+                        <span class="label">Compile</span>
+                        <div class="command-box">javac TransientSerialization.java</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                    <div class="command-wrapper">
+                        <span class="label">Run</span>
+                        <div class="command-box">java TransientSerialization</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Program 23 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="number">23</div>
+                    <div class="title">AWT Max of Three</div>
+                </div>
+                <div class="file-info">Source: AWTMaxOfThree.java</div>
+                <div class="command-group">
+                    <div class="command-wrapper">
+                        <span class="label">Compile</span>
+                        <div class="command-box">javac AWTMaxOfThree.java</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                    <div class="command-wrapper">
+                        <span class="label">Run</span>
+                        <div class="command-box">java AWTMaxOfThree</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Program 24 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="number">24</div>
+                    <div class="title">AWT List Demo</div>
+                </div>
+                <div class="file-info">Source: AWTListDemo.java</div>
+                <div class="command-group">
+                    <div class="command-wrapper">
+                        <span class="label">Compile</span>
+                        <div class="command-box">javac AWTListDemo.java</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                    <div class="command-wrapper">
+                        <span class="label">Run</span>
+                        <div class="command-box">java AWTListDemo</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Program 25 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="number">25</div>
+                    <div class="title">AWT CheckBox/Radio</div>
+                </div>
+                <div class="file-info">Source: AWTCheckBoxRadio.java</div>
+                <div class="command-group">
+                    <div class="command-wrapper">
+                        <span class="label">Compile</span>
+                        <div class="command-box">javac AWTCheckBoxRadio.java</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                    <div class="command-wrapper">
+                        <span class="label">Run</span>
+                        <div class="command-box">java AWTCheckBoxRadio</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Program 26 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="number">26</div>
+                    <div class="title">AWT Menu Demo</div>
+                </div>
+                <div class="file-info">Source: AWTMenuDemo.java</div>
+                <div class="command-group">
+                    <div class="command-wrapper">
+                        <span class="label">Compile</span>
+                        <div class="command-box">javac AWTMenuDemo.java</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                    <div class="command-wrapper">
+                        <span class="label">Run</span>
+                        <div class="command-box">java AWTMenuDemo</div>
+                        <button class="copy-btn" onclick="copyText(this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div class="tooltip">Copied!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            Built for Jiyo P V - Roll No: 33
+        </footer>
+    </div>
+
+    <script>
+        function copyText(button) {
+            const wrapper = button.parentElement;
+            const text = wrapper.querySelector('.command-box').innerText;
+
+            navigator.clipboard.writeText(text).then(() => {
+                button.classList.add('success');
+                setTimeout(() => {
+                    button.classList.remove('success');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+
+</html>
